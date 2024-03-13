@@ -1,0 +1,144 @@
+{% extends '../base.html' %}
+
+{% block title %}
+    Hotel {{ hotel.pk }}
+{% endblock %}
+
+{% block additional_styles %}
+    <link rel="stylesheet" type="text/css" href="path/to/custom.css">
+{% endblock %}
+
+{% block body %}
+    <div style="margin-top: 20px" class="container">
+        <h1 id="hotelName" class="heading">{{ hotel.name }}</h1>
+        <p id="hotelAddress" class="info">Address: {{ hotel.address }}</p>
+        <p id="hotelCity" class="info">City: {{ hotel.city }}</p>
+        <p id="hotelRating" class="rating">Rating: {{ hotel.rating }}</p>
+        <p id="hotelDescription" class="description">{{ hotel.description }}</p>
+        <img id="hotelImage" class="image" src="{{ hotel.image.url }}" alt="">
+        <a href="{% url 'hotel_rooms' hotel.pk %}"><button id="roomsButton" class="button">Book the room</button></a>
+    </div>
+
+    <script>
+        // JavaScript код
+        var hotel = {
+            name: "{{ hotel.name }}",
+            address: "{{ hotel.address }}",
+            city: "{{ hotel.city }}",
+            rating: "{{ hotel.rating }}",
+            description: "{{ hotel.description }}",
+            image: {
+                url: "{{ hotel.image.url }}"
+            }
+        };
+
+        // Вставляем данные отеля в соответствующие элементы на странице
+        document.getElementById("hotelName").innerText = hotel.name;
+        document.getElementById("hotelAddress").innerText = "Address: " + hotel.address;
+        document.getElementById("hotelCity").innerText = "City: " + hotel.city;
+        document.getElementById("hotelRating").innerText = "Rating: " + hotel.rating;
+        document.getElementById("hotelDescription").innerText = hotel.description;
+        document.getElementById("hotelImage").src = hotel.image.url;
+
+        // Добавляем анимацию при загрузке страницы
+        document.addEventListener("DOMContentLoaded", function() {
+            var container = document.querySelector(".container");
+            container.classList.add("fade-in");
+        });
+
+        // Обработчик события для кнопки "Rooms"
+        var roomsButton = document.getElementById("roomsButton");
+        roomsButton.addEventListener("click", function() {
+            // Действия при нажатии на кнопку "Rooms"
+        });
+    </script>
+    {% block styles %}
+        <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    opacity: 0; /* Добавляем начальное значение непрозрачности для анимации */
+    animation: fade-in 0.5s ease-in-out forwards; /* Добавляем анимацию появления */
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.heading {
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.info {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.rating {
+    font-weight: bold;
+    color: #FFC107;
+}
+
+.description {
+    font-style: italic;
+}
+
+.image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.button {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.button:active {
+    background-color: #003080;
+}
+
+.button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+}
+}
+        </style>
+    {% endblock %}
+{% endblock %}
