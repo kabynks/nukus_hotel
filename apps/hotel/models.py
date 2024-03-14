@@ -1,19 +1,11 @@
 from django.db.models import *
 from apps.guest.models import Guest
 class Hotel(Model):
-    GEEKS_CHOICES = (
-        ("One star", "1"),
-        ("Two star", "2"),
-        ("Three star", "3"),
-        ("Four star", "4"),
-        ("Five star", "5"),
-        ("Six star", "6"),
-        ('Seven star', "7")
-    )
+
     name = CharField(max_length=128)
     address = CharField(max_length=256)
     city = CharField(max_length=64)
-    rating = CharField(choices=GEEKS_CHOICES, max_length=12)
+    rating = DecimalField(max_digits=2, decimal_places=1)
     image = ImageField(upload_to="hotel_images")
     description = TextField()
 

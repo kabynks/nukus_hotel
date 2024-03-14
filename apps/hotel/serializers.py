@@ -1,7 +1,8 @@
 from rest_framework.serializers import ModelSerializer
 from .models import *
-
+from rest_framework.serializers import MultipleChoiceField
 class HotelSerializer(ModelSerializer):
+
     class Meta:
         model = Hotel
         fields = "__all__"
