@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import *
 from rest_framework.routers import DefaultRouter
-# from .views import HotelViewSet, RoomViewSet, BookingViewSet
+from .views import HotelViewSet, RoomViewSet, BookingViewSet
 
 router = DefaultRouter()
 router.register("hotelapi", HotelViewSet, basename="hotel")
