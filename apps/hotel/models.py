@@ -2,13 +2,13 @@ from django.db.models import *
 from apps.guest.models import Guest
 class Hotel(Model):
     GEEKS_CHOICES = (
-        ("1", "1"),
-        ("2", "2"),
-        ("3", "3"),
-        ("4", "4"),
-        ("5", "5"),
-        ("6", "6"),
-        ('7', "7")
+        ("One star", "1"),
+        ("Two star", "2"),
+        ("Three star", "3"),
+        ("Four star", "4"),
+        ("Five star", "5"),
+        ("Six star", "6"),
+        ('Seven star', "7")
     )
     name = CharField(max_length=128)
     address = CharField(max_length=256)
