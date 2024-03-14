@@ -13,7 +13,7 @@ class Hotel(Model):
     name = CharField(max_length=128)
     address = CharField(max_length=256)
     city = CharField(max_length=64)
-    rating = CharField(choices=GEEKS_CHOICES, max_length=5)
+    rating = CharField(choices=GEEKS_CHOICES, max_length=12)
     image = ImageField(upload_to="hotel_images")
     description = TextField()
 
