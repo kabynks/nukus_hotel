@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib import messages
+from rest_framework.viewsets import ModelViewSet
+
 from .forms import SignupForm, LoginForm
+from .models import Guest
+from .serializers import GuestSerializer
 
 
 def signup(request):
@@ -17,6 +21,7 @@ def signup(request):
 
 def login(request):
     if request.user.is_authenticated:
+        logout(request)
         return redirect("home")
     else:
         if request.method == 'POST':
@@ -38,3 +43,7 @@ def login(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+class GuestViewSet(ModelViewSet):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer

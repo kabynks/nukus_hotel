@@ -30,8 +30,13 @@ INSTALLED_APPS = [
     'apps.hotel',
     'apps.guest',
     #3rd party
-    'django_cleanup'
+    'django_cleanup',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'drf_spectacular',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,10 +69,25 @@ TEMPLATES = [
 WSGI_APPLICATION = 'src.wsgi.application'
 AUTH_USER_MODEL = "guest.Guest"
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-
+SPECTACULAR_SETTING = {
+    'TITLE': 'This is hotels in Nukus website',
+    'VERSION': '1.0.0',
+    'DESCRIPTION': 'This is site for found hotels for people who travels on the world'
+}
 
 
 # Password validation

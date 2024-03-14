@@ -1,6 +1,5 @@
 from django.db.models import *
 from apps.guest.models import Guest
-
 class Hotel(Model):
     GEEKS_CHOICES = (
         ("One", "1"),

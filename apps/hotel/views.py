@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from .models import *
-from django.contrib.auth.mixins import LoginRequiredMixin
+from .serializers import *
+from rest_framework.viewsets import ModelViewSet
+
+
 def homepage(request):
     return render(request, "hotel/home.html")
 
@@ -26,3 +29,16 @@ def hotel_rooms(request, pk):
         return render(request, "hotel/hotel_rooms.html",context=context)
     else:
         return redirect("login")
+class HotelViewSet(ModelViewSet):
+    queryset = Hotel.objects.all()
+    serializer_class = HotelSerializer
+
+class RoomViewSet(ModelViewSet):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+class BookingViewSet(ModelViewSet):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+
+

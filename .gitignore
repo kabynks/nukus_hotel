@@ -120,6 +120,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+local.sqlite3
 .env
 .venv
 env/
