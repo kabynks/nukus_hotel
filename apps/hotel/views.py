@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from .models import *
@@ -5,10 +6,11 @@ from .serializers import *
 from rest_framework.viewsets import ModelViewSet
 
 
+
 def homepage(request):
     return render(request, "hotel/home.html")
 
-class Hotels_List(ListView):
+class Hotels_List(LoginRequiredMixin,ListView):
     model = Hotel
     template_name = "hotel/hotels_list.html"
     context_object_name = 'hotels'

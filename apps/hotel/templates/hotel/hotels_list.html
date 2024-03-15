@@ -61,21 +61,25 @@
 {% endblock %}
 
 {% block body %}
-  <div style="margin-top: 20px" class="container">
-    <div class="row">
-      {% for hotel in hotels %}
-        <div class="col-lg-4">
-          <div class="hotel-card">
-            <h1>{{ hotel.name }}</h1>
-            <p>{{ hotel.address }}</p>
-            <p>{{ hotel.city }}</p>
-            <p>{{ hotel.rating }}</p>
-            <p>{{ hotel.description|truncatewords:200}}</p>
-            <img src="{{ hotel.image.url }}" alt="">
-            <a class="btn btn-details" href="{% url 'hotel_detail' hotel.pk %}">Подробнее</a>
-          </div>
-        </div>
-      {% endfor %}
+
+      <div style="margin-top: 20px" class="container">
+        <div class="row">
+          {% for hotel in hotels %}
+            <div class="col-lg-4">
+              <div class="hotel-card">
+                <h1>{{ hotel.name }}</h1>
+                <p>{{ hotel.address }}</p>
+                <p>{{ hotel.city }}</p>
+                <p>{{ hotel.rating }}</p>
+                <p>{{ hotel.description|truncatewords:200}}</p>
+                <img src="{{ hotel.image.url }}" alt="">
+                <a class="btn btn-details" href="{% url 'hotel_detail' hotel.pk %}">Подробнее</a>
+              </div>
+            </div>
+          {% endfor %}
     </div>
   </div>
+
+
+
 {% endblock %}

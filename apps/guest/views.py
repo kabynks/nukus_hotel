@@ -21,8 +21,7 @@ def signup(request):
 
 def login(request):
     if request.user.is_authenticated:
-        logout(request)
-        return redirect("home")
+        return redirect("hotels_list")
     else:
         if request.method == 'POST':
             form = LoginForm(request.POST)
@@ -32,7 +31,7 @@ def login(request):
                 user = authenticate(request, username=username, password=password)
                 if user is not None:
                     auth_login(request, user)
-                    return redirect('home')  # Замените 'home' на имя вашего URL-маршрута для домашней страницы
+                    return redirect('hotels_list')  # Замените 'home' на имя вашего URL-маршрута для домашней страницы
                 else:
                     messages.error(request, 'Неверное имя пользователя или пароль.')
                     return redirect('login')  # Замените 'login' на имя вашего URL-маршрута для страницы входа
