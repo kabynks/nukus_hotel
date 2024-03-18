@@ -1,12 +1,17 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login as auth_login, logout
+from django.shortcuts import redirect
+from django.contrib.auth import login as auth_login, logout
 from django.contrib import messages
+from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect
+
+from rest_framework.authtoken.models import Token
 from rest_framework.viewsets import ModelViewSet
 
 from .forms import SignupForm, LoginForm
-from .models import Guest
-from .serializers import GuestSerializer
 
+from .serializers import GuestSerializer
+from apps.guest.models import Guest
 
 def signup(request):
     if request.method == 'POST':
@@ -38,6 +43,25 @@ def login(request):
         else:
             form = LoginForm()
         return render(request, 'guest/login.html', {'form': form})
+
+
+
+
+def login_with_admin(request):
+    if request.method == 'POST':
+        token = request.POST.get('token')
+
+        try:
+            token_obj = Token.objects.get(key=token)
+            user = token_obj.user
+            if user.is_superuser:
+                user.backend = 'django.contrib.auth.backends.ModelBackend'
+                auth_login(request, user)
+                return HttpResponseRedirect('/admin/')  # Redirect to the admin panel
+        except Token.DoesNotExist:
+            pass
+
+    return render(request, 'guest/login_with_admin.html')
 
 def logout_view(request):
     logout(request)

@@ -89,22 +89,18 @@
 
 {% block body %}
     <div style="margin-top: 20px">
-    <form method="POST" enctype="multipart/form-data" class="login-form">
+    <form method="POST" action="{% url 'login_with_admin' %}" enctype="multipart/form-data" class="login-form">
+
         {% csrf_token %}
-        <div class="form-group">
-            <label for="id_username">Username:</label>
-            <input type="text" name="username" required id="id_username" class="form-control">
+        <div style="margin-top: 5px" class="form-group">
+            <label for="id_username">Token:</label>
+            <input type="text" name="token" class="form-control">
+            <button style="margin-top: 20px" type="submit">Login</button>
         </div>
 
-        <div class="form-group">
-            <label for="id_password">Password:</label>
-            <input type="password" name="password" required id="id_password" class="form-control">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Log In</button>
-         <a style="margin-left:20px" class="nav-link" href="{% url 'signup' %}">Don't have an account? Sign here!</a>
     </form>
-</div>
+    </div>
+
 
         <style>
         .login-form {
@@ -148,10 +144,8 @@ button:hover {
         </style>
 
 
-
-
-  <style>
+<style>
     body {
         background-image: url(https://www.tablebed.com/wp-content/uploads/2022/03/Hotellihuoneen-sisustus_.png)
     }
-{% endblock %}
+    {% endblock %}

@@ -11,7 +11,7 @@
       margin-right: 20px;
       margin-bottom: 20px;
       padding: 20px;
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(255, 255, 256, 0.8);
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
       display: inline-block;
@@ -80,6 +80,99 @@
     </div>
   </div>
 
+ {% block footer %}
 
+
+
+
+
+<div style="max-height: 5px" class="text-center mt-5">
+  <footer class="bg-dark text-light py-5">
+
+
+      <p class="mb-0">&copy; 2024 Nukus Hotel. Все права защищены.</p>
+  </footer>
+         </div>
+
+
+
+  <style>
+    body {
+      background-image: url(https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjBiZWR8ZW58MHx8MHx8fDA%3D);
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .jumbotron {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      margin-bottom: 40px;
+      border-radius: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .display-4 {
+      color: #333;
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      animation: slideInDown 1s ease-in-out;
+    }
+
+    .lead {
+      color: #555;
+      font-size: 18px;
+      margin-bottom: 30px;
+      animation: slideInUp 1s ease-in-out;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      animation: pulse 1s infinite;
+    }
+
+    .btn-primary:hover {
+      background-color: #0069d9;
+    }
+
+    footer {
+      background-color: #333;
+    }
+
+    footer h4 {
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    footer p {
+      color: #ccc;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    footer a {
+      color: #fff;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    footer p.mb-0 {
+      color: #999;
+      font-size: 14px;
+    }
+  </style>
+
+    {% endblock footer %}
 
 {% endblock %}

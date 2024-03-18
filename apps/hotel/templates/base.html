@@ -28,8 +28,12 @@
 
                   </li>
                     {% else %}
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    <li>
+                        <a class="nav-link" href="{% url 'login_with_admin' %}">Login with admin</a>
+                    </li>
+                    <a class="nav-link" href="{% url 'login' %}">Login with guest</a>
                   </li>
+
                 {% endif %}
 
 
@@ -43,5 +47,8 @@
 
     {% block styles %}
     {% endblock styles %}
+
+
+
 </body>
 </html>

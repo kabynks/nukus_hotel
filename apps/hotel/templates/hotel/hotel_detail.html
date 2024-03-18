@@ -4,23 +4,56 @@
     Hotel {{ hotel.pk }}
 {% endblock %}
 
-{% block additional_styles %}
-    <link rel="stylesheet" type="text/css" href="path/to/custom.css">
-{% endblock %}
+
 
 {% block body %}
-    <div style="margin-top: 20px" class="container">
-        <h1 id="hotelName" class="heading">{{ hotel.name }}</h1>
-        <p id="hotelAddress" class="info">Address: {{ hotel.address }}</p>
-        <p id="hotelCity" class="info">City: {{ hotel.city }}</p>
-        <p id="hotelRating" class="rating">Rating: {{ hotel.rating }}</p>
-        <p id="hotelDescription" class="description">{{ hotel.description }}</p>
-        <img id="hotelImage" class="image" src="{{ hotel.image.url }}" alt="">
-        <a href="{% url 'hotel_rooms' hotel.pk %}"><button id="roomsButton" class="button">Book the room</button></a>
+    <div class="container">
+        <div class="header">
+            <h1 id="hotelName" class="heading">{{ hotel.name }}</h1>
+            <p id="hotelRating" class="rating">Rating: {{ hotel.rating }}</p>
+        </div>
+        <div class="content">
+            <div class="image-container">
+                <img id="hotelImage" class="image" src="{{ hotel.image.url }}" alt="">
+            </div>
+            <div class="info-container">
+                <p id="hotelAddress" class="info">Address: {{ hotel.address }}</p>
+                <p id="hotelCity" class="info">City: {{ hotel.city }}</p>
+                <p id="hotelDescription" class="description">{{ hotel.description }}</p>
+                <a href="{% url 'hotel_rooms' hotel.pk %}"><button id="roomsButton" class="button">Book a Room</button></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="commentsSection" class="comments-section">
+        <h2 class="section-heading">Guest Comments</h2>
+        <ul id="commentsList" class="comments-list">
+            <!-- Fake comments -->
+            <li class="comment">
+                <div class="comment-header">
+                    <span class="comment-author">John Doe</span>
+                    <span class="comment-date">March 15, 2024</span>
+                </div>
+                <p class="comment-content">This hotel exceeded my expectations! The staff was friendly, rooms were clean, and the location was perfect.</p>
+            </li>
+            <li class="comment">
+                <div class="comment-header">
+                    <span class="comment-author">Jane Smith</span>
+                    <span class="comment-date">March 14, 2024</span>
+                </div>
+                <p class="comment-content">I had a wonderful stay at this hotel. The amenities were top-notch and the view from my room was breathtaking.</p>
+            </li>
+        </ul>
+        <form id="commentForm" class="comment-form">
+            <h3 class="form-heading">Leave a Comment</h3>
+            <input type="text" id="commentAuthor" class="input-field" placeholder="Your Name" required>
+            <textarea id="commentContent" class="input-field" placeholder="Your Comment" required></textarea>
+            <button type="submit" id="submitComment" class="submit-button">Submit</button>
+        </form>
     </div>
 
     <script>
-        // JavaScript код
+        // JavaScript code
         var hotel = {
             name: "{{ hotel.name }}",
             address: "{{ hotel.address }}",
@@ -32,113 +65,397 @@
             }
         };
 
-        // Вставляем данные отеля в соответствующие элементы на странице
+        // Insert hotel data into corresponding elements on the page
         document.getElementById("hotelName").innerText = hotel.name;
+        document.getElementById("hotelRating").innerText = "Rating: " + hotel.rating;
         document.getElementById("hotelAddress").innerText = "Address: " + hotel.address;
         document.getElementById("hotelCity").innerText = "City: " + hotel.city;
-        document.getElementById("hotelRating").innerText = "Rating: " + hotel.rating;
         document.getElementById("hotelDescription").innerText = hotel.description;
         document.getElementById("hotelImage").src = hotel.image.url;
 
-        // Добавляем анимацию при загрузке страницы
+        // Add animation on page load
         document.addEventListener("DOMContentLoaded", function() {
             var container = document.querySelector(".container");
             container.classList.add("fade-in");
         });
 
-        // Обработчик события для кнопки "Rooms"
+        // Event handler for "Rooms" button
         var roomsButton = document.getElementById("roomsButton");
         roomsButton.addEventListener("click", function() {
-            // Действия при нажатии на кнопку "Rooms"
+            // Actions when the "Rooms" button is clicked
+        });
+
+        // Event handler for submitting a comment
+        var commentForm = document.getElementById("commentForm");
+        commentForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            var authorInput = document.getElementById("commentAuthor");
+            var contentInput = document.getElementById("commentContent");
+            var commentsList = document.getElementById("commentsList");
+
+            // Create a new comment element
+            var comment = document.createElement("li");
+            comment.className = "comment";
+
+            var commentHeader = document.createElement("div");
+            commentHeader.className ="comment-header";
+
+            var commentAuthor = document.createElement("span");
+            commentAuthor.className = "comment-author";
+            commentAuthor.innerText = authorInput.value;
+
+            var commentDate = document.createElement("span");
+            commentDate.className = "comment-date";
+            commentDate.innerText = "March 15, 2024"; // Use the current date or retrieve from the server
+
+            var commentContent = document.createElement("p");
+            commentContent.className = "comment-content";
+            commentContent.innerText = contentInput.value;
+
+            // Append elements to the comment
+            commentHeader.appendChild(commentAuthor);
+            commentHeader.appendChild(commentDate);
+            comment.appendChild(commentHeader);
+            comment.appendChild(commentContent);
+
+            // Add the comment to the comments list
+            commentsList.appendChild(comment);
+
+            // Clear the input fields
+            authorInput.value = "";
+            contentInput.value = "";
         });
     </script>
     {% block styles %}
         <style>
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+        /* Стили для контейнера отеля */
 .container {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    opacity: 0; /* Добавляем начальное значение непрозрачности для анимации */
-    animation: fade-in 0.5s ease-in-out forwards; /* Добавляем анимацию появления */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 
-@keyframes fade-in {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
+/* Стили для заголовка отеля */
 .heading {
-    color: #333;
     font-size: 24px;
-    font-weight: bold;
-    margin-top: 20px;
+    margin-top: 0;
 }
 
+/* Стили для рейтинга отеля */
+.rating {
+    font-size: 16px;
+    color: #888;
+}
+
+/* Стили для изображения отеля */
+.image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Стили для информации об отеле */
 .info {
-    color: #555;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/* Стили для описания отеля */
+.description {
     font-size: 16px;
     line-height: 1.5;
     margin-bottom: 10px;
 }
 
-.rating {
-    font-weight: bold;
-    color: #FFC107;
-}
-
-.description {
-    font-style: italic;
-}
-
-.image {
-    max-width: 100%;
-    height: auto;
-    margin-top: 20px;
-}
-
+/* Стили для кнопки "Book a Room" */
 .button {
-    display: block;
-    margin-top: 20px;
     padding: 10px 20px;
+    font-size: 16px;
     background-color: #007bff;
     color: #fff;
-    font-size: 16px;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    border-radius: 4px;
-    text-align: center;
 }
 
 .button:hover {
     background-color: #0056b3;
 }
 
-.button:active {
-    background-color: #003080;
+/* Стили для раздела с комментариями */
+.comments-section {
+    margin-top: 20px;
 }
 
-.button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+/* Стили для заголовка раздела с комментариями */
+.section-heading {
+    font-size: 24px;
+    margin-top: 0;
 }
+
+/* Стили для списка комментариев */
+.comments-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Стили для комментария */
+.comment {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+/* Стили для заголовка комментария */
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment-date {
+    color: #888;
+    font-size: 14px;
+}
+
+/* Стили для контента комментария */
+.comment-content {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Стили для формы комментария */
+.comment-form {
+    margin-top: 20px;
+}
+
+/* Стили для заголовка формы комментария */
+.form-heading {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/* Стили для полей ввода формы комментария */
+.input-field {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Стили для кнопки отправки комментария */
+.submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+/* Стили для комментария */
+.comment {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+/* Стили для заголовка комментария */
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #007bff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.comment-date {
+    color: #888;
+    font-size: 14px;
+}
+
+/* Стили для контента комментария */
+.comment-content {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Стили для кнопки "Reply" */
+.reply-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.reply-button:hover {
+    background-color: #0056b3;
+}
+
+/* Стили для формы ответа на комментарий */
+.reply-form {
+    margin-top: 10px;
+}
+
+/* Стили для заголовка формы ответа на комментарий */
+.reply-form-heading {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+/* Стили для поля ввода ответа на комментарий */
+.reply-input-field {
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Стили для кнопки отправки ответа на комментарий */
+.reply-submit-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.reply-submit-button:hover {
+    background-color: #0056b3;
 }
         </style>
-    {% endblock %}
+        {% endblock %}
+     {% block footer %}
+
+
+
+
+
+<div style="max-height: 5px" class="text-center mt-5">
+  <footer class="bg-dark text-light py-5">
+
+
+      <p class="mb-0">&copy; 2024 Nukus Hotel. Все права защищены.</p>
+  </footer>
+         </div>
+
+
+
+  <style>
+    body {
+      background-image: url(https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjBiZWR8ZW58MHx8MHx8fDA%3D);
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .jumbotron {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      margin-bottom: 40px;
+      border-radius: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .display-4 {
+      color: #333;
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      animation: slideInDown 1s ease-in-out;
+    }
+
+    .lead {
+      color: #555;
+      font-size: 18px;
+      margin-bottom: 30px;
+      animation: slideInUp 1s ease-in-out;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      animation: pulse 1s infinite;
+    }
+
+    .btn-primary:hover {
+      background-color: #0069d9;
+    }
+
+    footer {
+      background-color: #333;
+    }
+
+    footer h4 {
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    footer p {
+      color: #ccc;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    footer a {
+      color: #fff;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    footer p.mb-0 {
+      color: #999;
+      font-size: 14px;
+    }
+  </style>
+
+    {% endblock footer %}
 {% endblock %}
